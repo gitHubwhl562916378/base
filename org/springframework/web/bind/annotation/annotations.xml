@@ -1,0 +1,5 @@
+<root>
+    <item name='org.springframework.web.bind.annotation.ResponseBody'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>
