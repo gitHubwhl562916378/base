@@ -13,8 +13,8 @@ import java.io.IOException;
 
 @RestController
 public class FaceFeatureController {
-    private FaceFeature faceFeature =  new FaceFeature();;
-    private Object feature_mtx = "";
+    private FaceFeature faceFeature =  new FaceFeature();
+    private Object feature_mtx = "1";
 
     @RequestMapping("/face-feature")
     public FaceFeatureDTO OnFile(MultipartFile file){
@@ -28,19 +28,17 @@ public class FaceFeatureController {
 
             long last = System.currentTimeMillis();
             Mat image = Imgcodecs.imdecode(src, Imgcodecs.IMREAD_COLOR);
-            System.out.println("34 time use " + (System.currentTimeMillis() - last) + " millics");
+            System.out.println("decode mat use " + (System.currentTimeMillis() - last) + " millics");
 
-            last = System.currentTimeMillis();
             synchronized (feature_mtx)
             {
                 result = faceFeature.feature(image.getNativeObjAddr());
             }
-            System.out.println("38 time use " + (System.currentTimeMillis() - last) + " millics");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println("time use " + (System.currentTimeMillis() - tie) + " millics");
+        System.out.println("feature use " + (System.currentTimeMillis() - tie) + " millics");
         return result;
     }
 
