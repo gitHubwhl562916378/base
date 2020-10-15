@@ -2,6 +2,7 @@ package com.osmagic.base;
 
 import com.koala.osmagic.face_feature.cpp.FaceFeature;
 import com.koala.osmagic.face_feature.cpp.FaceFeatureDTO;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -9,11 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 @RestController
 public class FaceFeatureController {
     private FaceFeature faceFeature =  new FaceFeature();
     private Object feature_mtx = "1";
+//    private final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(6);
 
     @RequestMapping("/face-feature")
     public FaceFeatureDTO OnFile(MultipartFile file){
@@ -26,11 +32,26 @@ public class FaceFeatureController {
             src.put(0, 0, bytes);
 
             long last = System.currentTimeMillis();
+
+//            Future<Mat> future = fixedThreadPool.submit(()->Imgcodecs.imdecode(src, Imgcodecs.IMREAD_COLOR));
+//
+//            Mat image = null;
+//            try {
+//                image = future.get();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            } catch (ExecutionException e) {
+//                e.printStackTrace();
+//            }
+
             Mat image = Imgcodecs.imdecode(src, Imgcodecs.IMREAD_COLOR);
+
             System.out.println("decode mat use " + (System.currentTimeMillis() - last) + " millics");
 
+            last = System.currentTimeMillis();
             synchronized (feature_mtx)
             {
+                last = System.currentTimeMillis();
                 result = faceFeature.feature(image.getNativeObjAddr());
             }
         } catch (IOException e) {
