@@ -41,13 +41,7 @@
             <artifactId>osmagic-sdk</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>/home/whl/Documents/vscode/new_osmagic/Koala-osmagic-sdk/target/osmagic-sdk-1.0-SNAPSHOT.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openpnp</groupId>
-            <artifactId>opencv</artifactId>
-            <version>4.3.0-0</version>
+            <systemPath>${project.basedir}/../Koala-osmagic-sdk/target/osmagic-sdk-1.0-SNAPSHOT-jar-with-dependencies.jar</systemPath>
         </dependency>
     </dependencies>
 

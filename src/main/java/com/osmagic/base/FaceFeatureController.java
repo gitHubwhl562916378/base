@@ -2,7 +2,6 @@ package com.osmagic.base;
 
 import com.koala.osmagic.face_feature.cpp.FaceFeature;
 import com.koala.osmagic.face_feature.cpp.FaceFeatureDTO;
-import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
