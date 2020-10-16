@@ -5,10 +5,12 @@ import com.koala.osmagic.face_feature.cpp.FaceFeatureDTO;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfRect;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -29,7 +31,7 @@ public class FaceFeatureController {
         try {
             byte[] bytes = file.getBytes();
 //            Future<Mat> future = fixedThreadPool.submit(()->Imgcodecs.imdecode(src, Imgcodecs.IMREAD_COLOR));
-//
+
 //            Mat image = null;
 //            try {
 //                image = future.get();
@@ -53,6 +55,17 @@ public class FaceFeatureController {
         return result;
     }
 
+    @PostMapping("/multi-files")
+    public  String multi_handle(@RequestParam(value = "face") MultipartFile f, @RequestParam(value = "body") MultipartFile b) throws IOException {
+        File face = new File("face.jpg");
+        face.createNewFile();
+        File body = new File("body.jpg");
+        body.createNewFile();
+        f.transferTo(face);
+        b.transferTo(body);
+        return "ok";
+    }
+
     @PostMapping("/form")
     public String form(MultipartFile file)
     {
@@ -65,7 +78,7 @@ public class FaceFeatureController {
         return "qppps";
     }
 
-    @PostMapping("/binary")
+    @PostMapping("/binary") //https://www.xjyili.cn/3415.html http中body参数解析
     public String binary(@RequestBody BinaryBody boyd)
     {
 
