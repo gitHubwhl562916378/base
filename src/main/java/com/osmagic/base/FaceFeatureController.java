@@ -28,11 +28,6 @@ public class FaceFeatureController {
 
         try {
             byte[] bytes = file.getBytes();
-            Mat src = new Mat(1, bytes.length, CvType.CV_8UC1);
-            src.put(0, 0, bytes);
-
-            long last = System.currentTimeMillis();
-
 //            Future<Mat> future = fixedThreadPool.submit(()->Imgcodecs.imdecode(src, Imgcodecs.IMREAD_COLOR));
 //
 //            Mat image = null;
@@ -44,15 +39,11 @@ public class FaceFeatureController {
 //                e.printStackTrace();
 //            }
 
-            Mat image = Imgcodecs.imdecode(src, Imgcodecs.IMREAD_COLOR);
-
-            System.out.println("decode mat use " + (System.currentTimeMillis() - last) + " millics");
-
-            last = System.currentTimeMillis();
+            long last = System.currentTimeMillis();
             synchronized (feature_mtx)
             {
                 last = System.currentTimeMillis();
-                result = faceFeature.feature(image.getNativeObjAddr());
+                result = faceFeature.feature(bytes);
             }
         } catch (IOException e) {
             e.printStackTrace();
